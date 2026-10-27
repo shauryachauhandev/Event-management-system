@@ -7,10 +7,16 @@ const seed=[
  {id:5,title:'Open Mic Evening',cat:'cult',date:'2026-11-20',time:'17:00',venue:'Student Lounge',cap:80,reg:23,desc:'Poetry, stand-up and music. Sign up to perform or just listen.'},
  {id:6,title:'Web Dev with HTML, CSS & JS',cat:'work',date:'2026-11-10',time:'11:00',venue:'Lab 1, CSE Block',cap:50,reg:19,desc:'Build and host a small site from scratch in one afternoon.'}
 ];
+const USER=Auth.current();
+if(!USER)location.replace('login.html');
+const UKEY=USER?USER.email:'';
 let S;
 try{S=JSON.parse(localStorage.getItem('gatherup'))}catch(e){}
-if(!S||!S.events)S={events:seed,mine:[4],next:7};
-const save=()=>{try{localStorage.setItem('gatherup',JSON.stringify(S))}catch(e){}};
+if(!S||!S.events)S={events:seed,next:7};
+S.regs=S.regs||{};
+// registrations are kept per account; S.mine is always the signed-in user's list
+S.mine=(S.regs[UKEY]||[]).filter(id=>S.events.some(e=>e.id===id));
+const save=()=>{S.regs[UKEY]=S.mine;try{localStorage.setItem('gatherup',JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtDate=(d,t)=>new Date(d+'T'+t).toLocaleString('en-IN',{weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
@@ -105,4 +111,6 @@ $('#form').onsubmit=e=>{
   else{S.events.push({id:S.next++,reg:0,...d});toast('Event created')}
   save();$('#dlg').close();render();
 };
+if(USER){$('#uname').textContent=USER.name;$('#uemail').textContent=USER.email}
+$('#logout').onclick=()=>Auth.logout();
 render();
