@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campus Events Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="logo">Event<span>Manager</span></div>
+    <nav id="nav" aria-label="Main">
+      <button data-v="dash">Overview</button>
+      <button data-v="events">All events</button>
+      <button data-v="mine">My registrations</button>
+      <button data-v="manage">Manage events</button>
+    </nav>
+    <div class="spacer"></div>
+  </aside>
+  <main id="view"></main>
+</div>
+
+<dialog id="dlg">
+  <h2 id="dlgTitle">Create event</h2>
+  <form id="form">
+    <label>Event name<input name="title" required maxlength="70"></label>
+    <div class="two">
+      <label>Category<select name="cat"><option value="tech">Tech</option><option value="cult">Cultural</option><option value="sport">Sports</option><option value="work">Workshop</option></select></label>
+      <label>Seats<input name="cap" type="number" min="1" max="2000" value="100" required></label>
+    </div>
+    <div class="two">
+      <label>Date<input name="date" type="date" required></label>
+      <label>Start time<input name="time" type="time" value="10:00" required></label>
+    </div>
+    <label>Venue<input name="venue" required maxlength="60"></label>
+    <label>Description<textarea name="desc" rows="3" maxlength="240"></textarea></label>
+    <div class="actions">
+      <button type="button" class="btn alt" id="cancel">Cancel</button>
+      <button class="btn" type="submit">Save event</button>
+    </div>
+  </form>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="/script.js"></script>
+</body>
+</html>
