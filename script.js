@@ -50,7 +50,7 @@ const views={
    <div class="stat"><b>${cap?Math.round(total/cap*100):0}%</b><small>Seats filled</small></div>
    <div class="stat"><b>${S.mine.length}</b><small>Your registrations</small></div>
   </div>
-  ${nx?`<div class="next"><div><small>Happening next</small><h2>${esc(nx.title)}</h2><p>${fmtDate(nx.date,nx.time)} &middot; ${esc(nx.venue)}</p></div><button class="btn" style="background:#14193a;color:#fff" data-toggle="${nx.id}" ${S.mine.includes(nx.id)||nx.reg>=nx.cap?'disabled':''}>${S.mine.includes(nx.id)?'You’re registered':nx.reg>=nx.cap?'Event full':'Register now'}</button></div>`:''}
+  ${nx?`<div class="next"><div><small>Happening next</small><h2>${esc(nx.title)}</h2><p>${fmtDate(nx.date,nx.time)} &middot; ${esc(nx.venue)}</p></div><button class="btn" data-toggle="${nx.id}" ${S.mine.includes(nx.id)||nx.reg>=nx.cap?'disabled':''}>${S.mine.includes(nx.id)?'You’re registered':nx.reg>=nx.cap?'Event full':'Register now'}</button></div>`:''}
   <div class="bars"><h3 style="margin-bottom:8px">Events by category</h3>
   ${counts.map(([k,n])=>`<div class="bar"><span>${CATS[k]}</span><div class="track"><div class="fill" style="width:${n/mx*100}%;background:var(--c-${k})"></div></div><b>${n}</b></div>`).join('')}</div>`;
  },
